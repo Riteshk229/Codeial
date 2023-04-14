@@ -28,3 +28,13 @@ module.exports.signIn = function(req,res){
         title : 'Codial | sign In'
     });
 };
+
+// get signup data
+module.exports.create = function(req,res){
+
+};
+
+// Signin and create session for user
+module.exports.createSession = function(req,res){
+    
+};
