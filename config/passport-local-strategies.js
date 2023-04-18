@@ -6,12 +6,12 @@ const User = require('../models/user')
 
 
 // Authentication using passport
-passport.create(new LocalStrategy({
+passport.use(new LocalStrategy({
         usernameField : 'email',
     },
     function(email,password,done){
         // find a user and establish his identity
-        User.findOne({email : email}).then(function(user.err){
+        User.findOne({email : email}).then(function(user,err){
             if(err){
                 console.log("Error in finding User -----> Passport");
                 return done(err);
@@ -42,5 +42,27 @@ passport.deserializeUser(function(id,done){
         return done(null,user);
     });
 });
+
+// check if the user is authenticated
+passport.checkAuthentication = function(req,res,next){
+    console.log("Inside CheckAuthentication");
+    if(req.isAuthenticated()){
+        return next();
+    }
+
+    // if the user is not signed in
+    return res.redirect('/users/sign-in');
+};
+
+
+passport.setAuthenticatedUser= function(req,res,next){
+    if(req.isAuthenticated()){
+        // req.user conatins the current signed in user from the
+        // session cookie and we are just sending this to the locals for the views
+        res.locals.user = req.user;
+    }
+
+    return next();
+};
 
 module.export = passport;
