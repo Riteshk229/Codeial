@@ -45,7 +45,7 @@ passport.deserializeUser(function(id,done){
 
 // check if the user is authenticated
 passport.checkAuthentication = function(req,res,next){
-    console.log("Inside CheckAuthentication");
+    // console.log("Inside CheckAuthentication");
     if(req.isAuthenticated()){
         return next();
     }
