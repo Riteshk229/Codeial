@@ -1,7 +1,7 @@
 
-    <h1> <%= title%> </h1>
+<h1> <%= title%> </h1>
 
-
+<% if(locals.user) { %>
     <section id="feedpost">
         <h4>Posts</h4>
         
@@ -9,7 +9,7 @@
             <textarea name="content" id="" cols="30" rows="3" placeholder="Type Here"></textarea>
             <button type="submit">Post</button>
         </form>
-
+        
         <div id="post-container">
             <% if(posts.length != 0) { %>
                 <% for(let post of posts) { %>
@@ -22,8 +22,11 @@
                             </small>
                         </p>
                     </div>
-                <% } %>
-            <% } %>
-
-        </div>
-    </section>
+                    <% } %>
+                    <% } %>
+                    
+                </div>
+            </section>
+            
+            <%} %>
+            
