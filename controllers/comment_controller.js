@@ -27,3 +27,32 @@ module.exports.create = function(req,res){
     });
 
 };
+
+module.exports.destroy = function(req,res){
+
+    console.log(req.params)
+
+    Comment.findById(req.params.id).then(function(comment,err){
+        if(err){
+            console.log("Error in deleting the comment",err);
+        }
+
+        if(comment.user == req.user.id || req.user.pid == Post.findById(req.user.id).user){
+
+            let postID = comment.post;
+            comment.deleteOne();
+
+            Post.findByIdAndUpdate(postID , {$pull : {comment : req.params.id}}).then(function(post,err){
+                if(err){
+                    console.log(post.content+ "    " + comment.content);
+                    console.log("Error in deleting the comment from the array in post",err);
+                }
+
+                return res.redirect('back');
+            });
+        }
+        else{
+            return res.redirect('back');
+        }
+    });
+};
