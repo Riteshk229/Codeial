@@ -1,19 +1,17 @@
 header {
   width: 100%;
-  height: auto;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   background-color: aqua;
 }
 header div {
-  margin-top: 1%;
   font-size: 3rem;
   width: 20%;
   margin-left: 3%;
 }
 header ul {
   padding: 0;
-  font-size: 1.3rem;
   width: 15%;
   list-style: none;
   display: flex;
