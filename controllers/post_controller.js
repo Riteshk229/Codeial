@@ -22,7 +22,10 @@ module.exports.destroy = function(req,res){
 
         // .id is used to convert objects into strings
         if(post.user == req.user.id){
-            post.remove();
+            console.log(post);
+
+            // instead of post.remove() use the down cmd
+            post.deleteOne();
 
             Comment.deleteMany({post : req.params.id}).then(function(comment,err){
                 if(err){

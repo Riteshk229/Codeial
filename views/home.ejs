@@ -17,6 +17,13 @@
                     <div class="post">
                         <p>
                             <%= post.content %>
+                            <% if (locals.user && locals.user.id == post.user.id) { %>
+                                <small>
+                                    <a href="/post/destroy/<%= post.id %>"> 
+                                        close
+                                    </a>
+                                </small>
+                            <% }%>
                             <br>
                             <small> 
                                 <%= post.user.name %>
@@ -37,6 +44,13 @@
                                         <div>
                                             <p>
                                                 <%= comment.content %>
+                                                <% if (locals.user && locals.user.id == post.user.id) { %>
+                                                    <small>
+                                                        <a href="/comment/destroy/<%= post.id %>"> 
+                                                            close
+                                                        </a>
+                                                    </small>
+                                                <% }%>
                                                 <br>
                                                 <small>
                                                     <%= comment.user.name %>
