@@ -2,31 +2,56 @@
 <h1> <%= title%> </h1>
 
 <% if(locals.user) { %>
+
     <section id="feedpost">
         <h4>Posts</h4>
         
         <form action="/post/create" id="new-post-form" method="post">
-            <textarea name="content" id="" cols="30" rows="3" placeholder="Type Here"></textarea>
+            <textarea name="content" id="" cols="30" rows="3" placeholder="Type Here" required></textarea>
             <button type="submit">Post</button>
         </form>
         
         <div id="post-container">
             <% if(posts.length != 0) { %>
                 <% for(let post of posts) { %>
-                    <div>
+                    <div class="post">
                         <p>
                             <%= post.content %>
                             <br>
                             <small> 
                                 <%= post.user.name %>
                             </small>
-                        </p>
+                            </div>
+                        </p> 
+                        <div class="post-comment">
+                            <% if(locals.user) {%>
+                            <form action="/comment/create" method="post">
+                                <input type="text" name="content" placeholder="Type here to Add comment">
+                                <input type="hidden" name="post" value="<%= post._id%>">
+                                <button type="submit"> Add Comment</button>
+                            </form>
+                            <%}%>
+                            <div class="post-comment-by-users">
+                                <div id="post-comment-by-users- <%= post._id%>">
+                                    <% for(comment of post.comments) {%>
+                                        <div>
+                                            <p>
+                                                <%= comment.content %>
+                                                <br>
+                                                <small>
+                                                    <%= comment.user.name %>
+                                                </small>
+                                            </p>
+                                        </div>
+                                    <%}%>
+                                </div>
+                            </div>  
+                        </div>                   
                     </div>
-                    <% } %>
-                    <% } %>
-                    
-                </div>
-            </section>
-            
-            <%} %>
-            
+                <% } %>
+            <% } %>
+        </div>
+    </section>
+                
+<%} %>
+                
