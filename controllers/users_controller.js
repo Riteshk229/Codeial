@@ -18,6 +18,30 @@ module.exports.profile = function(req,res){
     });
 };
 
+module.exports.update = function(req,res){
+
+    console.log(req.body,req.params.id,req.user.id);
+
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id,
+            {
+            name : req.body.name,
+            email : req.body.email
+            }
+        ).then(function(user,err){
+            if(err){
+                console.log("Error in updating the users");
+                return;
+            }
+
+            return res.redirect("back");
+        });
+    }
+    else {
+        return res.status(401).send("Unauthorized")
+    }
+};
+
 module.exports.post = function(req,res){
     // return res.end('<h1> User Posts </h1>')
 

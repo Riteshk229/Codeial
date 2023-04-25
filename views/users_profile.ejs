@@ -5,6 +5,22 @@
       <div id="image">
          <img src="/images/profile_image.jpg" alt="<%= user.name%>_Profile_Image">
       </div>
-      <p> <%= profile_user.name%> </p>
-      <p> <%= profile_user.email%> </p>
+
+      <% if(user.id == profile_user.id) {%> 
+         <!-- if user matches show the update form -->
+         <form action="/users/update/<%= profile_user.id%>" method="post">
+            <section>
+               <label for="name"> Name </label>
+               <input name="name" type="text" placeholder="Your Name" value="<%= profile_user.name %>" required>
+               <label for="email"> Email </label>
+               <input name="email" type="text" placeholder="Your Email" value="<%= profile_user.email %>" required>
+               <button type="submit"> Update </button>
+            </section>
+         </form>
+      <%} else { %>
+         <!-- else show only profile info -->
+         <p> <%= profile_user.name%> </p>
+         <p> <%= profile_user.email%> </p>
+      <%}%>
+
    </div>
