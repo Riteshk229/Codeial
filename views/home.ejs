@@ -12,57 +12,8 @@
         </form>
         
         <div id="post-container">
-            <% if(posts.length != 0) { %>
-                <% for(let post of posts) { %>
-                    <div class="post">
-                        <p>
-                            <%= post.content %>
-                            <% if (locals.user && locals.user.id == post.user.id) { %>
-                                <small>
-                                    <a href="/post/destroy/<%= post.id %>"> 
-                                        close
-                                    </a>
-                                </small>
-                            <% }%>
-                            <br>
-                            <small> 
-                                <%= post.user.name %>
-                            </small>
-                            </div>
-                        </p> 
-                        <div class="post-comment">
-                            <% if(locals.user) {%>
-                            <form action="/comment/create" method="post">
-                                <input type="text" name="content" placeholder="Type here to Add comment">
-                                <input type="hidden" name="post" value="<%= post._id%>">
-                                <button type="submit"> Add Comment</button>
-                            </form>
-                            <%}%>
-                            <div class="post-comment-by-users">
-                                <div id="post-comment-by-users- <%= post._id%>">
-                                    <% for(comment of post.comments) {%>
-                                        <div>
-                                            <p>
-                                                <%= comment.content %>
-                                                <% if (locals.user && locals.user.id == comment.user.id || locals.user.id == post.user.id) { %>
-                                                    <small>
-                                                        <a href="/comment/destroy/<%= comment.id%>/<%= post.id %>"> 
-                                                            close
-                                                        </a>
-                                                    </small>
-                                                <% }%>
-                                                <br>
-                                                <small>
-                                                    <%= comment.user.name %>
-                                                </small>
-                                            </p>
-                                        </div>
-                                    <%}%>
-                                </div>
-                            </div>  
-                        </div>                   
-                    </div>
-                <% } %>
+            <% for(let post of posts) { %>
+                <%- include('_post', {post:post}) -%>
             <% } %>
         </div>
     </section>
