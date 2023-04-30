@@ -4,7 +4,6 @@ module.exports.profile = function(req,res){
     // return res.end('<h1> User Profile </h1>');
 
     // console.log(req.params.id);
-
     User.findById(req.params.id).then(function(user,err){
         if(err){
             console.log("Error is fetcching user's profile");
@@ -33,7 +32,7 @@ module.exports.update = function(req,res){
                 console.log("Error in updating the users");
                 return;
             }
-
+            req.flash("success","Updated!!")
             return res.redirect("back");
         });
     }
@@ -42,18 +41,18 @@ module.exports.update = function(req,res){
     }
 };
 
-module.exports.post = function(req,res){
-    // return res.end('<h1> User Posts </h1>')
+// module.exports.post = function(req,res){
+//     // return res.end('<h1> User Posts </h1>')
 
-    return res.render('users_post',{
-        title: "Post"
-    });
-};
+//     return res.render('users_post',{
+//         title: "Post"
+//     });
+// };
 
 
 // render sign up page
 module.exports.signUp = function(req,res){
-    // its makes so that user can acess sign-in page again
+    // its makes so that user can't access sign-up page again
     if(req.isAuthenticated()){
         return res.redirect('/users/profile');
     }
@@ -64,7 +63,8 @@ module.exports.signUp = function(req,res){
 
 //render sign in page
 module.exports.signIn = function(req,res){
-    // its makes so that user can acess sign-in page again
+
+    // its makes so that user can't access sign-in page again
     if(req.isAuthenticated()){
         return res.redirect('/users/profile');
     }
@@ -78,6 +78,7 @@ module.exports.signIn = function(req,res){
 module.exports.create = function(req,res){
     console.log(`${req.body} in create`);
     if(req.body.password != req.body.confirm_password){
+        req.flash("error",'Please enter the same password in confirm password')
         return res.redirect('back');
     }
 
@@ -94,10 +95,12 @@ module.exports.create = function(req,res){
                     console.log("Error in creating user while signing up");
                     return ;
                 }
+                req.flash("success","Account Created")
                 return res.redirect('/users/sign-in');
             });
         }
         else{
+            req.flash("error",err)
             return res.redirect('back');
         }
     });
@@ -106,13 +109,18 @@ module.exports.create = function(req,res){
 
 // Signin and create session for user
 module.exports.createSession = function(req,res){
+
+    req.flash("success","Logged in Succesfully!");
+
     // console.log(`${req.body} in create`);
     return res.redirect('/');
 };
 
 module.exports.destroySession = function(req,res){
+
     req.logout(function(err) {
         if (err) { return next(err); }
+        req.flash("success","You have Logged Out!");
         res.redirect('/');
       });
 };

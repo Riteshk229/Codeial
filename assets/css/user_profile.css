@@ -1,38 +1,38 @@
-main {
-  background-color: aquamarine;
-  height: 100%;
+body {
+  background-color: lightblue;
 }
-main h1 {
-  margin: 0;
-  padding: 0;
-  padding-top: 1%;
-}
-main div {
-  margin-top: 1%;
+body #profile-container {
+  background-color: lightblue;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  font-size: 2rem;
-  font-weight: 500;
 }
-main div #image {
-  width: 200px;
-  height: 200px;
+body #profile-container #image {
+  width: 150px;
+  height: 150px;
 }
-main div #image img {
+body #profile-container #image img {
+  margin-top: 5%;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   box-shadow: 0 0 5px 5px lightgray;
 }
-main div #image:hover {
-  scale: 1.1;
+body #profile-container #image:hover {
+  scale: 1.5;
   transition: scale 2s;
 }
-main div p {
-  margin: 0;
-  padding: 0;
-  margin-top: 1%;
+body #profile-container form {
+  margin-top: 5%;
+}
+body #profile-container form section {
+  display: flex;
+  flex-direction: column;
+}
+body #profile-container form section input, body #profile-container form section label, body #profile-container form section button {
+  margin: 1%;
+  padding: 1%;
 }
 
 /*# sourceMappingURL=user_profile.css.map */

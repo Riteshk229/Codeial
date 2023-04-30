@@ -1,12 +1,18 @@
 body {
   margin: 0;
-  height: 80vh;
-  /* text-align: center; */
+  text-align: center;
 }
 body #layout-main {
-  height: auto;
-  color: blue;
-  text-align: center;
+  height: inherit;
+}
+body footer {
+  color: aliceblue;
+  background: grey;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  margin-top: 90%;
 }
 
 /*# sourceMappingURL=layout.css.map */
