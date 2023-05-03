@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comments');
+const User = require('../models/user');
 
 module.exports.create =  async function(req,res){
 
@@ -9,12 +10,13 @@ module.exports.create =  async function(req,res){
             user: req.user._id
          })
 
+         let user = await User.findById(req.user.id);
 
-         if(req.xhr){
-
+         if(req.xhr){;
             return res.status(200).json ({
                 data: {
-                    post : post
+                    post : post,
+                    user : user.name
                 },
                 message : " Poste Created !!!"
             });
@@ -47,6 +49,8 @@ module.exports.destroy = async function(req,res){
     try{
         let post = await Post.findById(req.params.id);
 
+        
+
         // .id is used to convert objects into strings
         if(post.user == req.user.id){
             console.log(`Deleted post \n ${post}`);
@@ -54,6 +58,16 @@ module.exports.destroy = async function(req,res){
             post.deleteOne();
 
             await Comment.deleteMany({post:req.params.id});
+
+            if(req.xhr){
+            
+                return res.status(200).json({
+                    data: {
+                        post_id : req.params.id,
+                    },
+                    message: "Post deleted"
+                });
+            }
 
             req.flash("success","Post and Comments Deleted")
             return res.redirect('back');
