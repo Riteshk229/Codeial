@@ -1,9 +1,13 @@
 body {
   margin: 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 body #layout-main {
-  height: inherit;
+  height: auto;
+  min-height: 100vh;
 }
 body footer {
   color: aliceblue;
@@ -12,7 +16,6 @@ body footer {
   display: flex;
   justify-content: flex-start;
   padding: 10px;
-  margin-top: 90%;
 }
 
 /*# sourceMappingURL=layout.css.map */

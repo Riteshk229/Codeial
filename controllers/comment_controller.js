@@ -1,5 +1,6 @@
 const Comment = require('../models/comments');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 
 module.exports.create = async function(req,res){
@@ -14,15 +15,28 @@ module.exports.create = async function(req,res){
                 user: req.user._id
             });
             
+            let user = await User.findById(req.user._id);
+            
             console.log(comment);
             post.comments.push(comment);
             post.save();
+            
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        post: post,
+                        comment : comment,
+                        user: user.name
+                    },
+                    message:'Comment Added !!'
+                });
+            }
             
             req.flash("succes","Comment Created");
             return res.redirect('/');
         }
     } catch (err){
-       req.flash("error",err);
+        req.flash("error",err);
     }
     
     // Post.findById(req.body.post).then(function(post,err){
@@ -55,28 +69,39 @@ module.exports.destroy = async function(req,res){
     try{
         
         let comment = await Comment.findById(req.params.id);   
-
+        
         if(comment.user == req.user.id || req.user.pid == Post.findById(req.post.id).user){
             
             
             let postID = comment.post;
             comment.deleteOne();
+            // comment.remove();
             
             await  Post.findByIdAndUpdate(postID ,
                 { $pull : 
                     {comment : req.params.id}
                 });
                 
-                req.flash("success","Comment Deleted")
-                return res.redirect('back');
+                if(req.xhr){
+                    return res.status(200).json({
+                        data: {
+                            comment : req.params.id
+                        },
+                        message:'Comment Deleted !!'
+                    });
+                }
+                    
+                    req.flash("success","Comment Deleted")
+                    return res.redirect('back');
+                }
+                else{
+                    return res.redirect('back');
+                }
             }
-            else{
-                return res.redirect('back');
-            }
-        } catch(err){
+            catch(err){
             req.flash("error",err);
             return res.redirect('back');
-
+            
         };
         
         // Comment.findById(req.params.id).then(function(comment,err){

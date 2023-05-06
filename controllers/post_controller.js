@@ -49,8 +49,6 @@ module.exports.destroy = async function(req,res){
     try{
         let post = await Post.findById(req.params.id);
 
-        
-
         // .id is used to convert objects into strings
         if(post.user == req.user.id){
             console.log(`Deleted post \n ${post}`);

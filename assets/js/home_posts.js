@@ -1,24 +1,4 @@
-
-function NotyS(notif){
-    new Noty({
-        theme: 'relax',
-        text : notif,
-        type: "success",
-        layout : "topRight",
-        timeout : 1500
-    }).show();
-};
-
-function NotyE(notif){
-    new Noty({
-        theme: 'relax',
-        text : notif,
-        type: "error",
-        layout : "topRight",
-        timeout : 1500
-    }).show();
-};
-
+import {NotyS, NotyE} from './noty.js';
 {
     
     // method for submitting the form data for new post using AJAX 
@@ -64,17 +44,14 @@ function NotyE(notif){
 
                 <div class="post-comment">
 
-                    <form action="/comment/create" method="post">
+                    <form action="/comment/create" id='new-comment-form' method="post">
                         <input type="text" name="content" placeholder="Type here to Add comment">
                         <input type="hidden" name="post" value="${post._id}">
                         <button type="submit"> Add Comment</button>
                     </form>
 
-                    <div class="post-comment-by-users">
-                        <div id="post-comment-by-users-${post._id}">
-
-                        </div>
-                    </div>  
+                    <div class='comment-list' id="post-comment-by-users-${post._id}">
+                    </div>   
                 </div>                   
             </div>`);
         };
@@ -86,7 +63,7 @@ function NotyE(notif){
             $(deleteLink).click(function(e){
                 // console.log(deleteLink);
                 e.preventDefault();
-                console.log("after prevent");
+                // console.log("after prevent");
                 $.ajax({
                     type: "get",
                     url : $(deleteLink).prop('href'),

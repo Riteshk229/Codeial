@@ -1,8 +1,13 @@
 body{
     margin: 0;
-    text-align: center; 
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+
     #layout-main{
-        height: inherit;
+        height: auto;
+        min-height: 100vh;
     }
     
     footer{
@@ -12,6 +17,5 @@ body{
         display: flex;
         justify-content: flex-start;
         padding: 10px;
-        margin-top: 90%;
     }
 }

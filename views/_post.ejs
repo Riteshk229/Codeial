@@ -15,20 +15,18 @@
     </p> 
     <div class="post-comment">
         <% if(locals.user) {%>
-        <form action="/comment/create" method="post">
+        <form action="/comment/create" id="new-comment-form" method="post">
             <input type="text" name="content" placeholder="Type here to Add comment">
             <input type="hidden" name="post" value="<%=post._id%>">
             <button type="submit"> Add Comment</button>
         </form>
         <%}%>
-        <div class="post-comment-by-users">
-            <div id="post-comment-by-users- <%=post._id%>">
-                <% for(comment of post.comments) {%>
-                    <%- include('_comments',{comment:comment}) %>
-                <%}%>
-            </div>
-        </div>  
+        <div class='comment-list' id="post-comment-by-users-<%=post._id%>">
+            <% for(comment of post.comments) {%>
+                <%- include('_comments',{comment:comment}) %>
+            <%}%>
+        </div> 
     </div>                   
 </div>
 
-<script src="/js/post_comments"></script>
+<script src="/js/post_comments.js" type="module"></script>

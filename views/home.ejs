@@ -4,12 +4,14 @@
 <% if(locals.user) { %>
 
 <section id="feedpost">
-    <h4>Posts</h4>
-        
-    <form action="/post/create" id="new-post-form" method="post">
-        <textarea name="content" id="" cols="30" rows="3" placeholder="Type Here" required></textarea>
-        <button type="submit">Post</button>
-    </form>
+
+    <div>
+        <h4>Posts</h4>
+        <form action="/post/create" id="new-post-form" method="post">
+            <textarea name="content" id="" cols="30" rows="3" placeholder="Type Here" required></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
         
     <div id="post-container">
         <% for(let post of posts) { %>
@@ -33,5 +35,5 @@
 <%} %>
 </div>
 
-<script  src="/js/home_posts.js"></script>
+<script  src="/js/home_posts.js" type="module"></script>
                 

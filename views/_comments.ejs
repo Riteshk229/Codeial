@@ -1,9 +1,9 @@
-<div>
+<div class="comments" id="comment-<%=comment.id%>">
     <p>
         <%= comment.content %>
         <% if (locals.user && locals.user.id == comment.user.id || locals.user.id == post.user.id) { %>
             <small>
-                <a href="/comment/destroy/<%= comment.id%>/<%= post.id %>"> 
+                <a class = 'delete-comment-btn' href="/comment/destroy/<%= comment.id%>/<%= post.id %>"> 
                     close
                 </a>
             </small>
