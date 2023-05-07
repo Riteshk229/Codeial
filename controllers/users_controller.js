@@ -17,28 +17,64 @@ module.exports.profile = function(req,res){
     });
 };
 
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
 
-    console.log(req.body,req.params.id,req.user.id);
+    console.log(req.params.id,req.user.id);
 
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,
-            {
-            name : req.body.name,
-            email : req.body.email
-            }
-        ).then(function(user,err){
-            if(err){
-                console.log("Error in updating the users");
-                return;
-            }
-            req.flash("success","Updated!!")
-            return res.redirect("back");
-        });
-    }
-    else {
+        try{
+            console.log(1);
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){ return console.log('***Multer Error',err)}
+
+                // console.log(req.file);
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                console.log(user.name,user.email);
+
+                if(req.file){
+                    console.log(req.file);
+                    // saving the path of the uloaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                    console.log(user.avatar);
+                }
+
+                user.save();
+                return res.redirect('back');
+
+            });
+        }catch(err){
+            req.flash('error', err);
+            return res.redirect('back');
+
+        }
+    } else{
+        req.flash('error', 'Unauthorized')
         return res.status(401).send("Unauthorized")
     }
+
+
+
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,
+    //         {
+    //         name : req.body.name,
+    //         email : req.body.email
+    //         }
+    //     ).then(function(user,err){
+    //         if(err){
+    //             console.log("Error in updating the users");
+    //             return;
+    //         }
+    //         req.flash("success","Updated!!")
+    //         return res.redirect("back");
+    //     });
+    // }
+    // else {
+    //     return res.status(401).send("Unauthorized")
+    // }
 };
 
 // module.exports.post = function(req,res){

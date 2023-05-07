@@ -2,17 +2,18 @@
    <div id ="profile-container">
       <h1> <%=profile_user.name%>'s <%= title %> Page</h1>
       <div id="image">
-         <img src="/images/profile_image.jpg" alt="<%= user.name%>_Profile_Image">
+         <img src="<%=user.avatar%>" alt="<%=user.name%>_Profile_Image">
       </div>
 
       <% if(user.id == profile_user.id) {%> 
          <!-- if user matches show the update form -->
-         <form action="/users/update/<%= profile_user.id%>" method="post">
+         <form action="/users/update/<%= profile_user.id%>" enctype="multipart/form-data" method="post">
             <section>
                <label for="name"> Name </label>
                <input name="name" type="text" placeholder="Your Name" value="<%= profile_user.name %>" required>
                <label for="email"> Email </label>
                <input name="email" type="text" placeholder="Your Email" value="<%= profile_user.email %>" required>
+               <input name="avatar" type="file" placeholder="Profile Picture">
                <button type="submit"> Update </button>
             </section>
          </form>
