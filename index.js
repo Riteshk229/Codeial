@@ -8,12 +8,13 @@ const db = require('./config/mongoose');
 // used for session cookie
 const session = require('express-session');
 const passport = require('passport');
-const passportLocal = require('./config/passport-local-strategies');
+const passportJWT = require('./config/passport-jwt-strategy');
+const passportLocal = require('./config/passport-local-strategy');
 const MongoStore =  require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const customMW = require('./config/middleware')
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
 
 app.use(cookieParser());
 
