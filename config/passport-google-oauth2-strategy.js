@@ -9,19 +9,21 @@ passport.use(new googleStrategy({
 
     clientID : '568715524745-82prvao0o1qfnpf1pnniqa58slth1jec.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL : 'https://localhost:8000/users/auth/google/callback',
+    callbackURL : 'http://localhost:8000/users/auth/google/callback',
     passReqToCallback: true
     },
-    function(accessToken,refreshToken,profile,done){
+    function(request,accessToken,refreshToken,profile,done){
+
+        // console.log(profile);
 
         // Find a User
-        User.findOne({email: profile.emails[0],value}).then(function(user,err){
+        User.findOne({email: profile.emails[0].value}).then(function(user,err){
             if(err){
                 console.log("Error in Google-Strategy User",err);
                 return done(err,false);
             }
 
-            console.log(profile);
+            // console.log(profile);
 
             if(user){
                 // if found set this user as req.user
@@ -32,7 +34,8 @@ passport.use(new googleStrategy({
                 User.create({
                     name : profile.displayName,
                     email : profile.emails[0].value,
-                    password : crypto.randomBytes(20).toString('hex')
+                    password : crypto.randomBytes(20).toString('hex'),
+                    avatar: ''
                 }).then(function(user,err){
                     if(err){
                         console.log("Error in Google-Strategy User",err);
@@ -48,3 +51,5 @@ passport.use(new googleStrategy({
 
     })
 );
+
+module.exports = passport;

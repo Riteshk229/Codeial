@@ -21,7 +21,7 @@ module.exports.profile = function(req,res){
 
 module.exports.update = async function(req,res){
     
-    console.log(req.params.id,req.user.id);
+    // console.log(req.params.id,req.user.id);
     
     if(req.user.id == req.params.id){
         try{
@@ -37,7 +37,7 @@ module.exports.update = async function(req,res){
                 // console.log(user.name,user.email);
                 
                 if(req.file){
-                    // console.log(req.file);
+                    console.log(req.file);
                     
                     let root = path.join(__dirname,"..",user.avatar);
                     console.log(root);
